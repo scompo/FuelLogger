@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+activity_main.xml
+This file contains the main activity layout.
+Just a simple FrameLayout wich will contain all the fragments for the application.
+-->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
