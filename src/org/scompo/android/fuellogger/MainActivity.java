@@ -18,6 +18,9 @@
 
 package org.scompo.android.fuellogger;
 
+import org.scompo.android.fuellogger.DB.DBHelper;
+import org.scompo.android.fuellogger.DB.Fillup;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -30,10 +33,13 @@ import android.view.Menu;
  * @version 1.0
  */
 public class MainActivity extends FragmentActivity {
+	
+	DBHelper DB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DB = DBHelper.getInstance(this);
         setContentView(R.layout.activity_main);
         // Check if the layout currently uses the Fragment container.
         // If so I should load the first frame.
@@ -44,6 +50,11 @@ public class MainActivity extends FragmentActivity {
         		return;
         	}
         	// Let's load the first fragment!
+        	DB.addFillup(new Fillup(0,100,100,"data",100,true));
+        	FragmentResume resume = new FragmentResume();
+        	resume.setArguments(getIntent().getExtras());
+        	getSupportFragmentManager().beginTransaction().add(
+        						R.id.main_fragment_container, resume).commit();
         	
         }
     }

@@ -35,6 +35,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper {
 	
+	/**
+	 * static instance to pass.
+	 */
+	private static DBHelper mInstance = null;
+	
 	// DB stuff.
 	private static final String DB_NAME = "FuelLogger.db";
 	private static final int DB_VERSION = 1;
@@ -45,7 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String TABLE_NAME_FILLUPS ="fillups";	
 	
 	/**
-	 * Database Fillup table creation.
+	 * Database Fillup table creation statement.
 	 */
 	private static final String DB_CREATE_STRING =
 			"create table " + TABLE_NAME_FILLUPS +" ( "+
@@ -53,17 +58,24 @@ public class DBHelper extends SQLiteOpenHelper {
 			Fillup.COLUMN_NAME_PRICE +" REAL, " +
 			Fillup.COLUMN_NAME_QT + " REAL, " +
 			Fillup.COLUMN_NAME_DATE +" TEXT, " +
-			Fillup.COLUMN_NAME_DISTANCE + "INTEGER," +
-			Fillup.COLUMN_NAME_PARTIAL + "INTEGER );";
+			Fillup.COLUMN_NAME_DISTANCE + " INTEGER," +
+			Fillup.COLUMN_NAME_PARTIAL + " INTEGER );";
 
 	SQLiteDatabase dataBase;
+	
+	public static DBHelper getInstance(Context ctx){
+		if(mInstance == null){
+			mInstance = new DBHelper(ctx);
+		}
+		return mInstance;
+	}
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param context the actual context.
 	 */
-	public DBHelper(Context context){
+	private DBHelper(Context context){
 		super(context,DB_NAME,null,DB_VERSION);
 	}
 	
@@ -124,11 +136,11 @@ public class DBHelper extends SQLiteOpenHelper {
 	private ContentValues createContentValues(Fillup fillup) {
 		ContentValues cv = new ContentValues();
 		cv.put(Fillup.COLUMN_NAME_DATE, fillup.getDate());
-		cv.put(Fillup.COLUMN_NAME_ID, fillup.getId());
+		//cv.put(Fillup.COLUMN_NAME_ID, fillup.getId());
 		cv.put(Fillup.COLUMN_NAME_PRICE, fillup.getPrice());
 		cv.put(Fillup.COLUMN_NAME_QT, fillup.getQt());
 		cv.put(Fillup.COLUMN_NAME_DISTANCE, fillup.getDistance());
-		cv.put(Fillup.COLUMN_NAME_PARTIAL, fillup.isPartial());
+		cv.put(Fillup.COLUMN_NAME_PARTIAL, fillup.isPartial()?1:0);
 		return cv;
 	}
 
@@ -232,6 +244,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				fU.setPrice(cur.getFloat(3));
 				fU.setQt(cur.getFloat(4));
 				fU.setPartial(cur.getInt(5)==1);
+				fillups.add(fU);
 			}while(cur.moveToNext());
 			cur.close();
 		}

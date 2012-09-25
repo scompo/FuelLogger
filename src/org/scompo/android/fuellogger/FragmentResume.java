@@ -18,7 +18,10 @@
 
 package org.scompo.android.fuellogger;
 
-import android.os.Build;
+import java.util.List;
+
+import org.scompo.android.fuellogger.DB.DBHelper;
+import org.scompo.android.fuellogger.DB.Fillup;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
@@ -30,19 +33,21 @@ import android.support.v4.app.ListFragment;
  */
 public class FragmentResume extends ListFragment {
 	
+	DBHelper mDB;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// We need to use a different list item layout 
 		//for devices older than Honeycomb
-        int layout = Build.VERSION.SDK_INT >= 
+        /*int layout = Build.VERSION.SDK_INT >= 
         		Build.VERSION_CODES.HONEYCOMB ?
 				android.R.layout.simple_list_item_activated_1 : 
-				android.R.layout.simple_list_item_1;
-        // Create an array adapter for the list view, 
-        // using the DataStuff headlines array
-        //setListAdapter(new ArrayAdapter<String>(getActivity(), layout, DataStuff.indexes));
-        
+				android.R.layout.simple_list_item_1;*/
+        mDB = DBHelper.getInstance(getActivity());
+        List <Fillup> data = mDB.getAllFillups();
+        FillupArrayAdapter adapter = new FillupArrayAdapter(this.getActivity(), R.id.list,data);
+        setListAdapter(adapter);
 	}
 	
 }
