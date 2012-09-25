@@ -19,9 +19,7 @@
 package org.scompo.android.fuellogger;
 
 import java.util.List;
-
 import org.scompo.android.fuellogger.DB.Fillup;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,24 +28,43 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * Implements an adapter for the list to use with a list of Fillups.
+ * 
+ * @author scompo
+ * @version 1.0
+ */
 public class FillupArrayAdapter extends ArrayAdapter<Fillup> {
 	
 	private Context mContext;
 	private List <Fillup> values;
 	
-	
+	/**
+	 * Constructor.
+	 * 
+	 * @param context The context.
+	 * @param viewResourceId The name of the resource to fill.
+	 * @param fill the list of fillup to add.
+	 */
 	public FillupArrayAdapter(Context context, int viewResourceId, List<Fillup> fill){
+		// Be careful to get the right constructor.
 		super(context, viewResourceId, fill);
 		mContext=context;
 		values = fill;
 	}
 	
+	/**
+	 * Really it's not needed.. btw.. it's still here.
+	 */
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return super.getCount();
 	}
 	
+	/**
+	 * To implement when the adapter fills the wiew.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		View row = convertView;

@@ -63,6 +63,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	SQLiteDatabase dataBase;
 	
+	/**
+	 * Static instance deliverer. Just to have only one static instance.
+	 * 
+	 * @param ctx The context.
+	 * @return A new instance of DBHelper.
+	 */
 	public static DBHelper getInstance(Context ctx){
 		if(mInstance == null){
 			mInstance = new DBHelper(ctx);
@@ -71,7 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * Constructor.
+	 * Constructor, private because it's better to have an only instance for all the application.
 	 * 
 	 * @param context the actual context.
 	 */
@@ -104,6 +110,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		dataBase= readOnly==true?this.getReadableDatabase():this.getWritableDatabase();
 	}
 	
+	/**
+	 * Closes the DB.
+	 */
 	private void closeDB(){
 		dataBase.close();
 	}

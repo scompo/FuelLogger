@@ -35,6 +35,9 @@ public class FragmentResume extends ListFragment {
 	
 	DBHelper mDB;
 	
+	/**
+	 * On create method.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
