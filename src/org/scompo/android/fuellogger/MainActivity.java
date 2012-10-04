@@ -18,12 +18,17 @@
 
 package org.scompo.android.fuellogger;
 
+import java.util.ArrayList;
+
+import org.scompo.android.fuellogger.FragmentDetails.OnButtonClickedListener;
+import org.scompo.android.fuellogger.FragmentMenu.OnMenuButtonClickedListener;
+import org.scompo.android.fuellogger.FragmentResume.OnFillupSelectedListener;
 import org.scompo.android.fuellogger.DB.DBHelper;
 import org.scompo.android.fuellogger.DB.Fillup;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.widget.Toast;
 
 /**
  * The main activity for the project.
@@ -32,9 +37,12 @@ import android.view.Menu;
  * @author scompo
  * @version 1.0
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnButtonClickedListener, 
+																OnFillupSelectedListener,
+																OnMenuButtonClickedListener{
 	
 	DBHelper DB;
+	public ArrayList<Fillup> listFillup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +58,11 @@ public class MainActivity extends FragmentActivity {
         		return;
         	}
         	// Let's load the first fragment!
-        	DB.addFillup(new Fillup(0,100,100,"data",100,true));
-        	FragmentResume resume = new FragmentResume();
-        	resume.setArguments(getIntent().getExtras());
-        	getSupportFragmentManager().beginTransaction().add(
-        						R.id.main_fragment_container, resume).commit();
+        	FragmentMenu menu = new FragmentMenu();
+        	menu.setArguments(getIntent().getExtras());
         	
+        	getSupportFragmentManager().beginTransaction().add(
+					R.id.main_fragment_container, menu).commit();        	
         }
     }
 
@@ -64,4 +71,53 @@ public class MainActivity extends FragmentActivity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
+
+	public void onFillupSelected(int position) {
+		Toast.makeText(this, listFillup.get(position).toString(), Toast.LENGTH_LONG).show();
+    	FragmentDetails details = new FragmentDetails();
+    	details.setContents(listFillup.get(position));
+    	getSupportFragmentManager().beginTransaction().replace(
+				R.id.main_fragment_container, details).commit();
+	}
+
+	public void onButtonClicked(int resourceId, Fillup fillup) {
+		switch (resourceId) {
+		case R.id.cmdSave:
+			DB.addFillup(fillup);
+			FragmentMenu menu= new FragmentMenu();
+        	getSupportFragmentManager().beginTransaction().replace(
+					R.id.main_fragment_container, menu).commit();    
+			break;
+			
+		default:
+			break;
+		}
+		
+	}
+
+	public void onMenuButtonClicked(int resourceID) {
+		switch (resourceID) {
+		case R.id.cmdAddNew:
+        	FragmentDetails details = new FragmentDetails();
+        	//details.setContents(new Fillup(100,100,100,"20/10/2012",100,true));
+        	getSupportFragmentManager().beginTransaction().replace(
+					R.id.main_fragment_container, details).commit();
+			break;
+			
+		case R.id.cmdViewData:
+			listFillup = (ArrayList<Fillup>) DB.getAllFillups();
+			FragmentResume resume = new FragmentResume();
+			resume.setList(listFillup);
+        	getSupportFragmentManager().beginTransaction().replace(
+					R.id.main_fragment_container, resume).commit();
+			break;
+			
+		case R.id.cmdExit:
+			this.finish();
+			break;
+			
+		default:
+			break;
+		}
+	}
 }

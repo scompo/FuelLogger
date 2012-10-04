@@ -4,5 +4,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="lblDateText">Date:</string>
+    <string name="lblDistanceText">Distance:</string>
+    <string name="lblQuantityText">Fuel Qt.:</string>
+    <string name="lblPriceText">Price:</string>
+    <string name="chkPartialText">Partial?</string>
+    <string name="cmdSaveText">Save</string>
+    <string name="lblHeaderText">Select what to do:</string>
+    <string name="cmdAddNewText">Add new fillup</string>
+    <string name="cmdViewDataText">View fillups</string>
+    <string name="cmdExitText">Exit</string>
+    <string name="cmdDateDescription">choose a date</string>
 
 </resources>

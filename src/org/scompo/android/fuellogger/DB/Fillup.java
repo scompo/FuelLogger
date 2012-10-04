@@ -18,6 +18,8 @@
 
 package org.scompo.android.fuellogger.DB;
 
+import java.util.Calendar;
+
 /**
  * Implements a single fillup to be used in the DB.
  * 
@@ -57,6 +59,11 @@ public class Fillup {
 	 */
 	public static final String COLUMN_NAME_PARTIAL ="partial";
 	
+	/**
+	 * Empty Fillup for comparison.
+	 */
+	public static final Fillup EMPTY_FILLUP = new Fillup();
+	
 	//private internal data.
 	private int id;
 	private float qt;
@@ -88,7 +95,7 @@ public class Fillup {
 	 * Empty constructor.
 	 */
 	public Fillup(){
-		this(0, 0, 0, null, 0,false);
+		this(-1, 0, 0, null, 0,false);
 	}
 	
 	/**

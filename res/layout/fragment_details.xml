@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Android fuel logger keeps track of the user fuel consumption.
+ *  
+ *  Copyright (C) 2012  Mauro Scomparin <http://scompoprojects.wordpress.com>
+ *  
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  activity_main.xml
+ *  This file contains the main activity layout.
+ *  Just a simple FrameLayout wich will contain all the fragments for the application.
+-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/lblDateText" />
+
+            <EditText
+                android:id="@+id/txtDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lblDate"
+                android:layout_toLeftOf="@+id/cmdDate"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/lblDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtDate"
+                android:text="@string/lblDistanceText">
+                <requestFocus />
+            </TextView>
+
+            <EditText
+                android:id="@+id/txtDistance"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lblDistance"
+                android:inputType="numberDecimal" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/lblQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtDistance"
+                android:text="@string/lblQuantityText" />
+
+            <EditText
+                android:id="@+id/txtQuantity"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lblQuantity"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/lblPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtQuantity"
+                android:text="@string/lblPriceText" />
+
+            <EditText
+                android:id="@+id/txtPrice"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lblPrice"
+                android:inputType="numberDecimal" />
+
+            <CheckBox
+                android:id="@+id/chkPartial"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtPrice"
+                android:text="@string/chkPartialText" />
+
+            <Button
+                android:id="@+id/cmdSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/chkPartial"
+                android:text="@string/cmdSaveText"/>
+
+            <ImageButton
+                android:id="@+id/cmdDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txtDate"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/lblDate"
+                android:src="@android:drawable/ic_menu_month" 
+                android:contentDescription="@string/cmdDateDescription"/>
+
+        </RelativeLayout>

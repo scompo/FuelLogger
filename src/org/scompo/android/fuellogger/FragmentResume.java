@@ -18,12 +18,16 @@
 
 package org.scompo.android.fuellogger;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.scompo.android.fuellogger.DB.DBHelper;
 import org.scompo.android.fuellogger.DB.Fillup;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.View;
+import android.widget.ListView;
 
 /**
  * This Class implements a ListFragment that shows the saved fillings.
@@ -33,7 +37,46 @@ import android.support.v4.app.ListFragment;
  */
 public class FragmentResume extends ListFragment {
 	
-	DBHelper mDB;
+	/**
+	 * Interface to implement to communicate between this fragment and the main activity.
+	 * 
+	 * @author scompo
+	 * @version 1.0
+	 */
+	public interface OnFillupSelectedListener{
+		
+		/**
+		 * Method called when a fillup in the list it's clicked.
+		 *  
+		 * @param position the position of the clicked item.
+		 */
+		public void onFillupSelected(int position);
+	}
+	
+	List<Fillup> lista;
+	
+	OnFillupSelectedListener mCallBack;
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallBack = (OnFillupSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFillupSelectedListener");
+        }
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewCreated(view, savedInstanceState);
+		FillupArrayAdapter adapter = new FillupArrayAdapter(getActivity(), android.R.id.list,lista);
+        setListAdapter(adapter);
+	}
 	
 	/**
 	 * On create method.
@@ -41,16 +84,18 @@ public class FragmentResume extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// We need to use a different list item layout 
-		//for devices older than Honeycomb
-        /*int layout = Build.VERSION.SDK_INT >= 
-        		Build.VERSION_CODES.HONEYCOMB ?
-				android.R.layout.simple_list_item_activated_1 : 
-				android.R.layout.simple_list_item_1;*/
-        mDB = DBHelper.getInstance(getActivity());
-        List <Fillup> data = mDB.getAllFillups();
-        FillupArrayAdapter adapter = new FillupArrayAdapter(this.getActivity(), R.id.list,data);
-        setListAdapter(adapter);
+	}
+	
+	/**
+	 * When I click on a fillup to see it!
+	 */
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		mCallBack.onFillupSelected(position);
+	}
+	
+	public void setList(ArrayList<Fillup> listFillup) {
+		lista = listFillup;
 	}
 	
 }
